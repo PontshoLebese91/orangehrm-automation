@@ -1,0 +1,18 @@
+{
+  "employee": {
+    "firstName": "John",
+    "middleName": "Michael",
+    "lastName": "Doe",
+    "nationality": "South African",
+    "maritalStatus": "Married",
+    "dateOfBirth": "1990-01-15",
+    "gender": "Male"
+  },
+  "job": {
+    "joinedDate": "2025-01-11",
+    "jobTitle": "QA Engineer",
+    "jobCategory": "Professionals",
+    "subUnit": "Quality Assurance",
+    "employmentStatus": "Full-Time Contract"
+  }
+}

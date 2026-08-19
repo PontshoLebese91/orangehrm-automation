@@ -1,0 +1,33 @@
+{
+  "name": "orangehrm-automation",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "Test:login": "cucumber-js test/features/login.feature",
+    "Test:dashboard": "cucumber-js test/features/dashboard.feature",
+    "Test:addEmployee": "cucumber-js test/features/employee.feature",
+    "Test:pim": "cucumber-js test/features/pim.feature",
+    "Test:jobDetails": "cucumber-js test/features/jobDetails.feature",
+    "Test:personalDetails": "cucumber-js test/features/personalDetails.feature",
+    "Test:negativeTest": "cucumber-js test/features/negativeScenarios.feature",
+    "Test:all": "cucumber-js test/features",
+    "Report:generate": "allure generate allure-results --clean -o allure-report",
+    "Report:open": "allure open allure-report",
+    "Test:report": "npm run Test:all"
+  },
+
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.2.1",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^26.2.0",
+    "allure-commandline": "^2.43.0",
+    "allure-cucumberjs": "^3.10.2",
+    "dotenv": "^17.4.2",
+    "tsx": "^4.23.12",
+    "typescript": "^5.9.2"
+  }
+}
