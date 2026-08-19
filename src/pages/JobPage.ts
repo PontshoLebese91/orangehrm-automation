@@ -93,16 +93,23 @@ export class JobPage extends BasePage {
     }
 
     private async selectDropdown(
-        dropdown: Locator,
-        option: string
-    ): Promise<void> {
+    dropdown: Locator,
+    option: string
+): Promise<void> {
 
-        await dropdown.click();
+    await expect(dropdown).toBeVisible();
+    await dropdown.click();
 
-        await this.page
-            .getByText(option, { exact: true })
-            .click();
-    }
+    const optionLocator = this.page
+        .locator('.oxd-select-dropdown')
+        .getByText(option, { exact: true });
+
+    await expect(optionLocator).toBeVisible({
+        timeout: 10000
+    });
+
+    await optionLocator.click();
+}
 
     async saveJobDetails(): Promise<void> {
         await this.saveButton.click();

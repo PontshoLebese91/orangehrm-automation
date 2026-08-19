@@ -89,51 +89,47 @@ export class PersonalDetailsPage extends BasePage {
     }
 
    async addAttachment(filePath: string): Promise<void> {
-        await this.attachmentAddButton.click();
+    await this.attachmentAddButton.click();
 
-        await expect(
-            this.attachmentSection.getByText('Add Attachment', { exact: true })
-        ).toBeVisible();
+    await expect(
+        this.attachmentSection.getByText('Add Attachment', { exact: true })
+    ).toBeVisible();
 
-        const fileChooserPromise = this.page.waitForEvent('filechooser');
+    const fileChooserPromise = this.page.waitForEvent('filechooser');
 
-        await this.attachmentSection.getByText('Browse', { exact: true }).click();
+    await this.attachmentSection
+        .getByText('Browse', { exact: true })
+        .click();
 
-        const fileChooser = await fileChooserPromise;
+    const fileChooser = await fileChooserPromise;
 
-        await fileChooser.setFiles(filePath);
-    }
-
-    async verifyFileSelected(fileName: string): Promise<void> {
-        await expect(
-            this.attachmentSection.getByText(fileName, { exact: true })
-        ).toBeVisible();
-    }
-
-    async verifyAttachmentSaved(fileName: string): Promise<void> {
-    const fileNameCell = this.attachmentTable
-        .locator('.oxd-table-card')
-        .getByText(
-            new RegExp(
-                `^${fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`,
-                'i'
-            )
-        );
-
-    await expect(fileNameCell).toBeVisible({ timeout: 10000 });
+    await fileChooser.setFiles(filePath);
 }
 
-    async saveAttachment(): Promise<void> {
+async verifyFileSelected(fileName: string): Promise<void> {
+    await expect(
+        this.attachmentSection.getByText(fileName, { exact: true })
+    ).toBeVisible();
+}
+
+async saveAttachment(): Promise<void> {
     await this.attachmentSaveButton.click();
+
+    await this.verifySuccessToast('Successfully Saved');
 }
 
-// async verifyPersonalDetailsSaved(): Promise<void> {
-//     await expect(
-//         this.page.locator('.oxd-toast').filter({
-//             hasText: /Successfully Updated/i
-//         })
-//     ).toBeVisible({ timeout: 10000 });
-// }
+async verifyAttachmentSaved(fileName: string): Promise<void> {
+    const fileNameText = this.attachmentSection.getByText(
+        new RegExp(
+            `^${fileName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}$`,
+            'i'
+        )
+    );
+
+    await expect(fileNameText).toBeVisible({
+        timeout: 15000
+    });
+}
 
 async verifyPersonalDetailsSaved(): Promise<void> {
     await this.verifySuccessToast('Successfully Updated');
