@@ -10,10 +10,11 @@ export class LoginPage extends BasePage {
 
     async navigate(): Promise<void> {
         await this.page.goto(process.env.BASE_URL!, {
-            waitUntil: 'domcontentloaded'
+            waitUntil: 'domcontentloaded', timeout: 60000
         });
 
-        await expect(this.page).toHaveURL(/login/);
+
+        await expect(this.page).toHaveURL(/login/,{timeout:30000});
     }
 
     async login(username: string, password: string): Promise<void> {

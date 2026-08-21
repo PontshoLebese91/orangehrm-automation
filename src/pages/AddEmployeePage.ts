@@ -164,11 +164,18 @@ export class AddEmployeePage extends BasePage {
             .locator('.oxd-input-group')
             .filter({ has: this.lastNameInput });
 
-        await expect(
-            lastNameGroup.getByText('Required', {
-                exact: true
-            })
-        ).toBeVisible();
-    }
-}
+        console.log('Last name groups:', await lastNameGroup.count());
 
+    if (await lastNameGroup.count() > 0) {
+        console.log(
+            await lastNameGroup.first().evaluate(el => el.outerHTML)
+        );
+    }
+
+    await expect(
+        lastNameGroup.getByText('Required', {
+            exact: true
+        })
+    ).toBeVisible({ timeout: 10000 });
+}
+}

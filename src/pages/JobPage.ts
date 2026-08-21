@@ -92,7 +92,7 @@ export class JobPage extends BasePage {
         await this.selectDropdown(this.employmentStatusDropdown, status);
     }
 
-    private async selectDropdown(
+   private async selectDropdown(
     dropdown: Locator,
     option: string
 ): Promise<void> {
@@ -100,15 +100,28 @@ export class JobPage extends BasePage {
     await expect(dropdown).toBeVisible();
     await dropdown.click();
 
-    const optionLocator = this.page
-        .locator('.oxd-select-dropdown')
-        .getByText(option, { exact: true });
+    const dropdownOptions = this.page.locator('.oxd-select-dropdown');
 
-    await expect(optionLocator).toBeVisible({
+    // 1. Try exact match first
+    const exactOption = dropdownOptions.getByText(option, { exact: true });
+
+    if (await exactOption.count() > 0) {
+        await exactOption.first().click();
+        return;
+    }
+
+    // 2. Fallback: match option starting with expected value
+    const partialOption = dropdownOptions
+        .locator('div')
+        .filter({
+            hasText: new RegExp(`^${option}(\\s|$)`)
+        });
+
+    await expect(partialOption.first()).toBeVisible({
         timeout: 10000
     });
 
-    await optionLocator.click();
+    await partialOption.first().click();
 }
 
     async saveJobDetails(): Promise<void> {

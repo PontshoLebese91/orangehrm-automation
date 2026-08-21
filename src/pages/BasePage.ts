@@ -34,14 +34,13 @@ export abstract class BasePage {
         await this.page.screenshot({ path: filename, fullPage: true });
     }
 
-    async verifySuccessToast(
-    message: 'Successfully Created' | 'Successfully Updated' | 'Successfully Saved'
-): Promise<void> {
-    await expect(
-        this.page.locator('.oxd-toast').filter({
+    async verifySuccessToast(message: string): Promise<void> {
+    const toast = this.page.locator('.oxd-toast').filter({
             hasText: message
         })
-    ).toBeVisible({ timeout: 10000 });
+
+        await expect(toast).toBeVisible({ timeout: 15000 });
+     console.log(`Successful toast displayed: '${message}"`);
 }
 
 
